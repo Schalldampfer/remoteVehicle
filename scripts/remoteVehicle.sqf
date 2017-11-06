@@ -1,8 +1,8 @@
 /*
-	Remote vehicle script by salival (https://github.com/oiad)
+	Remote vehicle script by salival (https://github.com/oiad) modified by Schalldampfer
 */
 
-private ["_characterID","_checkDistance","_display","_distance","_fuel","_group","_keyFound","_keyID","_keyName","_option","_time","_vehicle","_vehicleType"];
+private ["_characterID","_checkDistance","_display","_distance","_fuel","_group","_keyFound","_keyID","_keyName","_option","_time","_ownerID","_vehicle","_vehicleType","_vehicleName"];
 
 _keyName = _this select 0;
 _option = _this select 1;
@@ -27,16 +27,41 @@ _keyID = 0;
 if (_keyID == 0) exitWith {systemChat "No valid keys in your toolbelt."};
 
 _keyFound = false;
+_vehList = [];
 {
-	_vehicleType = typeOf _x;
-	_characterID = parseNumber (_x getVariable ["CharacterID","0"]);
-	if ((_characterID == _keyID) && {_vehicleType isKindOf "Air" || _vehicleType isKindOf "LandVehicle" || _vehicleType isKindOf "Ship"}) exitWith {
-		_keyFound = true;
-		_vehicle = _x;
+	_ownerID = parseNumber (_x getVariable ["CharacterID","0"]);
+	if (_keyID == _ownerID) then {
+		_vehList set [count _vehList,_x];//Add vehicle to list
 	};
 } count vehicles;
+CC_vehID = count _vehList;
+_keyFound = count _vehList > 0;
 
-if (!_keyFound) exitWith {systemChat "Unable to find a valid vehicle for this key.";};
+if (!_keyFound) exitWith {"Unable to find any vehicle for this key." call dayz_rollingMessages;};
+
+
+//Selection menu
+SelectKitt = [
+	[format["Remote Key %1",_keyName],true],
+	["Select car", [0], "", -2, [["expression", ""]], "1", "0"]
+];
+{
+	SelectKitt set[count SelectKitt, [ format["%1@%2m", getText (configFile >> "CfgVehicles" >> (typeOf _x) >> "displayName"), round(player distance _x)], [0], "", -5, [ ["expression",format["CC_vehID=%1;",_forEachIndex]] ], "1", "1"] ];
+} forEach _vehList;
+SelectKitt set [count SelectKitt, ["Exit", [1], "", -3, [["expression", "CC_vehID = count _vehList;"]], "1", "1"] ];
+
+if (count _vehList == 1) then {
+	CC_vehID = 0;
+} else {
+	showCommandingMenu "#USER:SelectKitt";
+	//Wait for selection
+	waitUntil {(CC_vehID != count _vehList)||(commandingMenu == "")};
+};
+
+//Set selected Vehicle
+_vehicle = _vehList select CC_vehID;
+_vehicleName =getText (configFile >> "CfgVehicles" >> (typeOf _vehicle) >> "displayName");
+
 if (!alive _vehicle) exitWith {systemChat "The vehicle for this key has been destroyed.";};
 
 if (_checkDistance && {(player distance _vehicle) >= _distance}) exitWith {format ["The remote is out of range for your %1.",_vehicleType] call dayz_rollingMessages;};
