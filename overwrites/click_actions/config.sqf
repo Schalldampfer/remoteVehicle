@@ -13,6 +13,15 @@
 //                  (example = {true})
 //  EXAMPLE -- see below for some simple examples
 DZE_CLICK_ACTIONS = [
+	["ItemMap","Disable Grass","setTerrainGrid 50;systemChat('Disabled Grass');","true"],
+	["ItemMap","Enable Grass Lv.1","setTerrainGrid 25;systemChat('Enabled Grass');","true"],
+	["ItemMap","Enable Grass Lv.2","setTerrainGrid 12.5;systemChat('Improved Grass');","true"],
+	["ItemRadio","Environment Sound ON" ,"enableEnvironment true;systemChat('Environment Sound ON');","true"],
+	["ItemRadio","Environment Sound OFF" ,"enableEnvironment false;systemChat('Environment Sound OFF');","true"],
+	["Binocular","View Range Up"   ,"if(isNil 'DZE_CA_VIEWRANGE') then {DZE_CA_VIEWRANGE = 1200;};DZE_CA_VIEWRANGE = (DZE_CA_VIEWRANGE + 100) min 4000;  systemChat format['View Distance: %1',DZE_CA_VIEWRANGE];setViewDistance DZE_CA_VIEWRANGE;","true"],
+	["Binocular","View Range Down" ,"if(isNil 'DZE_CA_VIEWRANGE') then {DZE_CA_VIEWRANGE = 1200;};DZE_CA_VIEWRANGE = (DZE_CA_VIEWRANGE - 100) max 200;   systemChat format['View Distance: %1',DZE_CA_VIEWRANGE];setViewDistance DZE_CA_VIEWRANGE;","true"],
+	["Binocular_Vector","Range Up"   ,"if(isNil 'DZE_CA_VIEWRANGE') then {DZE_CA_VIEWRANGE = 1200;};DZE_CA_VIEWRANGE = (DZE_CA_VIEWRANGE + 100) min 4000;systemChat format['View Distance: %1',DZE_CA_VIEWRANGE];setViewDistance DZE_CA_VIEWRANGE;","true"],
+	["Binocular_Vector","Range Down" ,"if(isNil 'DZE_CA_VIEWRANGE') then {DZE_CA_VIEWRANGE = 1200;};DZE_CA_VIEWRANGE = (DZE_CA_VIEWRANGE - 100) max 200; systemChat format['View Distance: %1',DZE_CA_VIEWRANGE];setViewDistance DZE_CA_VIEWRANGE;","true"],
     ["ItemGPS","Scan Nearby","if(isNil 'DZE_CLICK_ACTIONS_GPS_RANGE') then {DZE_CLICK_ACTIONS_GPS_RANGE = 1500;};DZE_CLICK_ACTIONS_ZOMBIE_COUNT = count ((position player) nearEntities ['zZombie_Base',DZE_CLICK_ACTIONS_GPS_RANGE]); DZE_CLICK_ACTIONS_MAN_COUNT = count ((position player) nearEntities ['CAManBase',DZE_CLICK_ACTIONS_GPS_RANGE]);cutText[format['Within %1 Meters: %2 AI/players, %3 zombies, %4 vehicles',DZE_CLICK_ACTIONS_GPS_RANGE,DZE_CLICK_ACTIONS_MAN_COUNT - DZE_CLICK_ACTIONS_ZOMBIE_COUNT,count ((position player) nearEntities ['zZombie_Base',DZE_CLICK_ACTIONS_GPS_RANGE]),count ((position player) nearEntities ['allVehicles',DZE_CLICK_ACTIONS_GPS_RANGE]) - DZE_CLICK_ACTIONS_MAN_COUNT],'PLAIN DOWN'];","true"],
     ["ItemGPS","Range Up"   ,"if(isNil 'DZE_CLICK_ACTIONS_GPS_RANGE') then {DZE_CLICK_ACTIONS_GPS_RANGE = 1500;};DZE_CLICK_ACTIONS_GPS_RANGE = (DZE_CLICK_ACTIONS_GPS_RANGE + 100) min 2500; cutText[format['GPS RANGE: %1',DZE_CLICK_ACTIONS_GPS_RANGE],'PLAIN DOWN'];","true"],
     ["ItemGPS","Range Down" ,"if(isNil 'DZE_CLICK_ACTIONS_GPS_RANGE') then {DZE_CLICK_ACTIONS_GPS_RANGE = 1500;};DZE_CLICK_ACTIONS_GPS_RANGE = (DZE_CLICK_ACTIONS_GPS_RANGE - 100) max 1000;  cutText[format['GPS RANGE: %1',DZE_CLICK_ACTIONS_GPS_RANGE],'PLAIN DOWN'];","true"],
