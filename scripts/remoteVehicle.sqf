@@ -26,7 +26,7 @@ _keyID = 0;
 	};
 } forEach (items player);
 
-if (_keyID == 0) exitWith {systemChat "No valid keys in your toolbelt."};
+if (_keyID == 0) exitWith {"No valid keys in your toolbelt." call dayz_rollingMessages;};
 
 _keyFound = false;
 _vehList = [];
@@ -64,25 +64,25 @@ if (count _vehList == 1) then {
 _vehicle = _vehList select CC_vehID;
 _vehicleName =getText (configFile >> "CfgVehicles" >> (typeOf _vehicle) >> "displayName");
 
-if (!alive _vehicle) exitWith {systemChat "The vehicle for this key has been destroyed.";};
+if (!alive _vehicle) exitWith {"The vehicle has been destroyed." call dayz_rollingMessages;};
 
-if (_checkDistance && {(player distance _vehicle) >= _distance}) exitWith {format ["The remote is out of range for your %1.",_vehicleType] call dayz_rollingMessages;};
+if (_checkDistance && {(player distance _vehicle) >= _distance}) exitWith {format ["The %1 is out of range.",_vehicleName] call dayz_rollingMessages;};
 
 if (_option == 1) then {
 	_group = units group player;
 
-	systemChat format ["Ejecting all players not in your group from: %1",_vehicleType];
+	format ["Ejecting all players not in your group from %1",_vehicleName] call dayz_rollingMessages;
 
 	{
 		if !(_x in _group) then {
 			_x action ["eject",_vehicle];
-			systemChat format ["Ejecting %1, they are NOT in your group.",name _x];
+			format ["Ejecting %1, he is NOT in your group.",name _x] call dayz_rollingMessages;
 		};
 	} forEach (crew _vehicle);
 };
 
 if (_option == 2) then {
-	systemChat format ["Toggling engine on/off in: %1",_vehicleType];
+	format ["Toggling engine of %1",_vehicleName] call dayz_rollingMessages;
 	if (isEngineOn _vehicle) then {
 		if (_vehicle isKindOf "Helicopter") then { // This is needed because dayz_engineSwitch won't turn off the engine for a helicopter.
 			_fuel = fuel _vehicle;
@@ -94,12 +94,12 @@ if (_option == 2) then {
 			[_vehicle,false] call dayz_engineSwitch;
 		};
 	} else {
-		[_vehicle,true] call dayz_engineSwitch
+		[_vehicle,true] call dayz_engineSwitch;
 	};
 };
 
 if (_option == 3) then {
-	systemChat format ["Unlocking: %1",_vehicleType];
+	format ["Unlocking %1",_vehicleName] call dayz_rollingMessages;
 	PVDZE_veh_Lock = [_vehicle,false];
 	_time = diag_tickTime;
 
@@ -113,7 +113,7 @@ if (_option == 3) then {
 };
 
 if (_option == 4) then {
-	systemChat format ["Locking: %1",_vehicleType];
+	format ["Locking %1",_vehicleName] call dayz_rollingMessages;
 	PVDZE_veh_Lock = [_vehicle,true];
 	_time = diag_tickTime;
 
