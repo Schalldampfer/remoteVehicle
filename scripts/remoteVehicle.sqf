@@ -15,6 +15,8 @@ disableSerialization;
 _display = findDisplay 106;
 _display closeDisplay 0;
 
+if ( !("ItemRadio" in ([player] call BIS_fnc_invString)) ) exitWith {"You don't have a radio." call dayz_rollingMessages;};
+
 _keyID = 0;
 {
 	if (configName(inheritsFrom(configFile >> "CfgWeapons" >> _x)) in ["ItemKeyYellow","ItemKeyBlue","ItemKeyRed","ItemKeyGreen","ItemKeyBlack"]) then {
