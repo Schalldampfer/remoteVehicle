@@ -34,3 +34,4 @@ DZE_CLICK_ACTIONS = DZE_CLICK_ACTIONS + [["ItemKey","Toggle engine on/off","spaw
 DZE_CLICK_ACTIONS = DZE_CLICK_ACTIONS + [["ItemKey","Unlock vehicle","spawn remoteVehicle;","true",3]];
 DZE_CLICK_ACTIONS = DZE_CLICK_ACTIONS + [["ItemKey","Lock vehicle","spawn remoteVehicle;","true",4]];
 DZE_CLICK_ACTIONS = DZE_CLICK_ACTIONS + [["ItemKey","Toggle Lights","spawn remoteVehicle;","true",5]];
+//DZE_CLICK_ACTIONS = DZE_CLICK_ACTIONS + [["ItemKey","Toggle Lock","spawn remoteVehicle;","true",6]];//combined 3&4

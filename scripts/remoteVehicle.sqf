@@ -112,3 +112,16 @@ if (_option == 5) then {
 		_vehicle setVariable ["lightOff",true];
 	};
 };
+
+if (_option == 6) then {
+	_locked = locked _vehicle;
+	format ["%2 %1",_vehicleName,if(_locked) then {"Unlocking"} else {"Locking"}] call dayz_rollingMessages;
+	PVDZE_veh_Lock = [_vehicle,!_locked];
+	_time = diag_tickTime;
+
+	if (local _vehicle) then {
+		PVDZE_veh_Lock call local_lockUnlock;
+	} else {
+		publicVariable "PVDZE_veh_Lock";
+	};
+};
