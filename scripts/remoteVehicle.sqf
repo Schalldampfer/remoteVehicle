@@ -98,3 +98,17 @@ if (_option == 4) then {
 		waitUntil {uiSleep 0.1;(locked _vehicle or (diag_tickTime - _time > 4))};
 	};
 };
+
+if (_option == 5) then {
+	if (_vehicle getVariable["lightOff",true]) then {
+		player action ["lightOn", _vehicle];
+		format ["Lights on %1",_vehicleName] call dayz_rollingMessages;
+		_vehicle setVariable ["lightOn",true];
+		_vehicle setVariable ["lightOff",false];
+	} else {
+		player action ["lightOff", _vehicle];
+		format ["Lights off %1",_vehicleName] call dayz_rollingMessages;
+		_vehicle setVariable ["lightOn",false];
+		_vehicle setVariable ["lightOff",true];
+	};
+};
